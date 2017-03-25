@@ -16,3 +16,4 @@ Route::get('/', function () {
 });
 
 Route::post('/videos', 'VideosController@create');
+Route::get('/videos/{id}', 'VideosController@view');

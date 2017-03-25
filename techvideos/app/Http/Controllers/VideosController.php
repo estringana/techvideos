@@ -19,4 +19,11 @@ class VideosController extends Controller
 
         return response('',201);
     }
+
+    public function view($id)
+    {
+        $video = Video::findOrFail($id);
+
+        return view('videos.view', ['video' => $video]);
+    }
 }
