@@ -12,6 +12,7 @@
 */
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
+use App\Label;
 use App\Video;
 
 $factory->define(App\User::class, function (Faker\Generator $faker) {
@@ -33,3 +34,10 @@ $factory->define(Video::class, function (Faker\Generator $faker) {
         'link' => $faker->url,
     ];
 });
+
+$factory->define(Label::class, function (Faker\Generator $faker) {
+    return [
+        'label' => $faker->word,
+    ];
+});
+
