@@ -22,7 +22,7 @@ class VideosCanBeAddedTest extends TestCase
                     'author' => 'John Doe',
                     'link' => 'http://random.link',
                     201,
-                    1
+                    1,
                 ],
             'Name is empty' =>
                 [
@@ -31,7 +31,7 @@ class VideosCanBeAddedTest extends TestCase
                     'author' => 'John Doe',
                     'link' => 'http://random.link',
                     302,
-                    0
+                    0,
                 ],
             'Description is empty' =>
                 [
@@ -40,7 +40,7 @@ class VideosCanBeAddedTest extends TestCase
                     'author' => 'John Doe',
                     'link' => 'http://random.link',
                     302,
-                    0
+                    0,
                 ],
             'Link is empty' =>
                 [
@@ -49,7 +49,7 @@ class VideosCanBeAddedTest extends TestCase
                     'author' => 'John Doe',
                     'link' => '',
                     302,
-                    0
+                    0,
                 ],
             'Link must be a valid URL' =>
                 [
@@ -58,7 +58,7 @@ class VideosCanBeAddedTest extends TestCase
                     'author' => 'John Doe',
                     'link' => 'Invalid URL here',
                     302,
-                    0
+                    0,
                 ],
         ];
     }
