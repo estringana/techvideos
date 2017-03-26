@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Commands\AddLabelToVideoCommand;
 use App\Http\Requests\CreateVideoRequest;
 use App\Label;
 use App\Video;
@@ -31,18 +32,8 @@ class VideosController extends Controller
 
     public function addLabel(int $videoId, string $labelName)
     {
-        /** @var Label $label */
-        $label = null;
-        /** @var Video $video */
-        $video = Video::findOrFail($videoId);
-        try {
-            $label = Label::where('label', $labelName)->firstOrFail();
-        } catch (ModelNotFoundException $exception) {
-            $label = new Label();
-            $label->label = $labelName;
-            $label->save();
-        }
-        $video->addLabel($label);
+        $command = new AddLabelToVideoCommand($videoId, $labelName);
+        $command->execute();
 
         return response('', 201);
     }
