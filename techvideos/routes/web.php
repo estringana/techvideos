@@ -17,5 +17,6 @@ Route::get('/', function () {
 
 Route::post('/videos', 'VideosController@create');
 Route::get('/videos/{id}', 'VideosController@view');
+Route::post('/videos/{id}/labels/{label}', 'VideosController@addLabel');
 
 Route::post('/labels', 'LabelsController@create');
