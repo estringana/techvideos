@@ -25,7 +25,7 @@ class LabelsCanBeAddedToVideosTest extends TestCase
             sprintf(
                 '/videos/%s/labels/%s',
                 $video->id,
-                $label->label
+                $label->name
             )
         )->assertStatus(201);
 

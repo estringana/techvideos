@@ -22,7 +22,7 @@ class AddLabelToVideoCommandTest extends TestCase
         /** @var Video $video */
         $video = factory(Video::class)->create();
 
-        $command = new AddLabelToVideoCommand($video->id, $label->label);
+        $command = new AddLabelToVideoCommand($video->id, $label->name);
         $command->execute();
 
         $this->assertCount(1, $video->labels);
@@ -40,7 +40,7 @@ class AddLabelToVideoCommandTest extends TestCase
         $command->execute();
 
         $this->assertCount(1, $video->labels);
-        $this->assertCount(1, Label::where('label', $labelToCreate)->get());
+        $this->assertCount(1, Label::where('name', $labelToCreate)->get());
     }
 
     /** @test */
