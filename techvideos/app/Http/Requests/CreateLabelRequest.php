@@ -24,7 +24,7 @@ class CreateLabelRequest extends FormRequest
     public function rules()
     {
         return [
-            'label' => 'required|filled|unique:labels',
+            'name' => 'required|filled|unique:labels',
         ];
     }
 }

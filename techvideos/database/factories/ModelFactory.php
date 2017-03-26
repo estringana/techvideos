@@ -37,7 +37,7 @@ $factory->define(Video::class, function (Faker\Generator $faker) {
 
 $factory->define(Label::class, function (Faker\Generator $faker) {
     return [
-        'label' => $faker->word,
+        'name' => $faker->word,
     ];
 });
 

@@ -17,7 +17,7 @@ class LabelsCanBeCreatedTest extends TestCase
     {
         $this->post('/labels',
             [
-                'label' => 'Some random text',
+                'name' => 'Some random text',
             ]
         )->assertStatus(201);
 
@@ -29,7 +29,7 @@ class LabelsCanBeCreatedTest extends TestCase
     {
         $this->post('/labels',
             [
-                'label' => '',
+                'name' => '',
             ]
         )->assertStatus(302);
 
@@ -40,12 +40,12 @@ class LabelsCanBeCreatedTest extends TestCase
     public function a_label_can_not_be_duplicated()
     {
         $label = factory(Label::class)->create([
-            'label' => 'Duplicated label',
+            'name' => 'Duplicated label',
         ]);
 
         $this->post('/labels',
             [
-                'label' => $label->label,
+                'name' => $label->name,
             ]
         )->assertStatus(302);
 

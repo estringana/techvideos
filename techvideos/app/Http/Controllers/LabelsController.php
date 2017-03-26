@@ -11,7 +11,7 @@ class LabelsController extends Controller
     public function create(CreateLabelRequest $request)
     {
         $label = new Label();
-        $label->label = $request->input('label');
+        $label->name = $request->input('name');
         $label->save();
 
         return response('', 201);
