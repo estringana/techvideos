@@ -6,7 +6,7 @@ build:
             version: 7.1
     tests:
         before:
-            - 'cd techvideos && composer install'
+            - 'composer install'
             - 'cp .env.example .env'
             - 'php artisan key:generate'
             - 'php artisan config:clear'
@@ -14,7 +14,7 @@ build:
             -
                 command: 'vendor/bin/phpunit --coverage-clover=coverage-file'
                 coverage:
-                    file: 'techvideos/coverage-file'
+                    file: 'coverage-file'
                     format: 'clover'
 filter:
-    paths: ["techvideos/app/*", "techvideos/tests/*"]
+    paths: ["app/*", "tests/*"]
