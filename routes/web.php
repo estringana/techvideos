@@ -13,7 +13,7 @@
 
 Route::post('/videos', 'VideosController@create');
 Route::get('/videos/{id}', 'VideosController@view');
-Route::post('/videos/{id}/labels/{label}', 'VideosController@addLabel');
+Route::post('/videos/{id}/labels', 'VideosController@addLabel');
 Route::get('/videos/{id}/labels', 'VideosController@getLabels');
 
 Route::get('/labels/{label}/videos', 'LabelsController@view');

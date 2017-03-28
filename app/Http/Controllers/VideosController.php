@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Commands\AddLabelToVideoCommand;
+use App\Http\Requests\AddLabelRequest;
 use App\Http\Requests\CreateVideoRequest;
 use App\Label;
 use App\Video;
@@ -30,8 +31,9 @@ class VideosController extends Controller
         return $video;
     }
 
-    public function addLabel(int $videoId, string $labelName)
+    public function addLabel(AddLabelRequest $request, int $videoId)
     {
+        $labelName = $request->input('name');
         $command = new AddLabelToVideoCommand($videoId, $labelName);
         $command->execute();
 
