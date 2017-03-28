@@ -27,7 +27,7 @@ class VideosController extends Controller
         /** @var Video $video */
         $video = Video::findOrFail($videoId);
 
-        return view('videos.view', ['video' => $video]);
+        return $video;
     }
 
     public function addLabel(int $videoId, string $labelName)
