@@ -66,7 +66,7 @@ class VideosCanBeAddedTest extends TestCase
     /**
      * @test
      * @dataProvider postProvider
-     **/
+     */
     public function videos_can_be_added($name, $description, $speaker, $link, $expectedStatus, $videosCreated)
     {
         $this->post('/videos',

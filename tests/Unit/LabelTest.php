@@ -12,7 +12,7 @@ class LabelTest extends TestCase
 {
     use DatabaseMigrations;
 
-    /** @test **/
+    /** @test */
     public function a_label_can_not_be_duplicated()
     {
         $randomName = 'Something';

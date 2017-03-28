@@ -13,7 +13,7 @@ class LabelsCanBeAddedToVideosTest extends TestCase
 {
     use DatabaseMigrations;
 
-    /** @test **/
+    /** @test */
     public function existing_label_can_be_added_to_an_existing_video()
     {
         /** @var Label $label */
@@ -32,7 +32,7 @@ class LabelsCanBeAddedToVideosTest extends TestCase
         $this->assertCount(1, $video->labels);
     }
     
-    /** @test **/
+    /** @test */
     public function new_label_can_be_added_to_an_existing_video()
     {
         /** @var Video $video */

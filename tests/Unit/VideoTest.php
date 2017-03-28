@@ -12,7 +12,7 @@ class VideoTest extends TestCase
 {
     use DatabaseMigrations;
 
-    /** @test **/
+    /** @test */
     public function existing_labels_can_be_added_to_a_video()
     {
         /** @var Label $label */
