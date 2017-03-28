@@ -16,4 +16,13 @@ class LabelsController extends Controller
 
         return response('', 201);
     }
+
+    public function view($labelName)
+    {
+        /** @var Label $label */
+        $label =  Label::findByName($labelName)
+            ->firstOrfail();
+
+        return $label->videos;
+    }
 }
