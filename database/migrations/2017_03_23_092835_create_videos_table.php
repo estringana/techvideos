@@ -17,7 +17,7 @@ class CreateVideosTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->longText('description');
-            $table->string('author');
+            $table->string('speaker');
             $table->string('link');
             $table->timestamps();
         });

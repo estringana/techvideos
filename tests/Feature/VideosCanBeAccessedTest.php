@@ -20,7 +20,7 @@ class VideosCanBeAccessedTest extends TestCase
         $this->get('/videos/'. $video->id)->assertStatus(200)
             ->assertSee($video->name)
             ->assertSee($video->description)
-            ->assertSee($video->author)
+            ->assertSee($video->speaker)
             ->assertSee($video->link);
     }
     

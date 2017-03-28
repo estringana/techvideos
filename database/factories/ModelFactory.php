@@ -30,7 +30,7 @@ $factory->define(Video::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->name,
         'description' => $faker->paragraphs(1, true),
-        'author' => $faker->firstName . " ". $faker->lastName,
+        'speaker' => $faker->firstName . " ". $faker->lastName,
         'link' => $faker->url,
     ];
 });

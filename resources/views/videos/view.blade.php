@@ -1,4 +1,4 @@
 {{$video->name}}
 {{$video->description}}
-{{$video->author}}
+{{$video->speaker}}
 {{$video->link}}
