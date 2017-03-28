@@ -15,7 +15,7 @@ class VideosController extends Controller
         $video = new Video();
         $video->name = $request->input('name');
         $video->description = $request->input('description');
-        $video->author = $request->input('author');
+        $video->speaker = $request->input('speaker');
         $video->link = $request->input('link');
         $video->save();
 

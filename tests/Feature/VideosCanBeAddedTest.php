@@ -19,7 +19,7 @@ class VideosCanBeAddedTest extends TestCase
                 [
                     'name' => 'Some name',
                     'description' => 'Some description',
-                    'author' => 'John Doe',
+                    'speaker' => 'John Doe',
                     'link' => 'http://random.link',
                     201,
                     1,
@@ -28,7 +28,7 @@ class VideosCanBeAddedTest extends TestCase
                 [
                     'name' => '',
                     'description' => 'Some description',
-                    'author' => 'John Doe',
+                    'speaker' => 'John Doe',
                     'link' => 'http://random.link',
                     302,
                     0,
@@ -37,7 +37,7 @@ class VideosCanBeAddedTest extends TestCase
                 [
                     'name' => 'Some name',
                     'description' => '',
-                    'author' => 'John Doe',
+                    'speaker' => 'John Doe',
                     'link' => 'http://random.link',
                     302,
                     0,
@@ -46,7 +46,7 @@ class VideosCanBeAddedTest extends TestCase
                 [
                     'name' => 'Some name',
                     'description' => 'Some description',
-                    'author' => 'John Doe',
+                    'speaker' => 'John Doe',
                     'link' => '',
                     302,
                     0,
@@ -55,7 +55,7 @@ class VideosCanBeAddedTest extends TestCase
                 [
                     'name' => 'Some name',
                     'description' => 'Some descriptions',
-                    'author' => 'John Doe',
+                    'speaker' => 'John Doe',
                     'link' => 'Invalid URL here',
                     302,
                     0,
@@ -67,13 +67,13 @@ class VideosCanBeAddedTest extends TestCase
      * @test
      * @dataProvider postProvider
      **/
-    public function videos_can_be_added($name, $description, $author, $link, $expectedStatus, $videosCreated)
+    public function videos_can_be_added($name, $description, $speaker, $link, $expectedStatus, $videosCreated)
     {
         $this->post('/videos',
             [
                 'name' => $name,
                 'description' => $description,
-                'author' => $author,
+                'speaker' => $speaker,
                 'link' => $link,
             ]
         )->assertStatus($expectedStatus);
