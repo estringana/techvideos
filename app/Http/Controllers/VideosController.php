@@ -19,7 +19,7 @@ class VideosController extends Controller
         $video->link = $request->input('link');
         $video->save();
 
-        return response('',201);
+        return response('', 201);
     }
 
     public function view($videoId)
@@ -36,5 +36,11 @@ class VideosController extends Controller
         $command->execute();
 
         return response('', 201);
+    }
+
+    public function getLabels(int $videoId)
+    {
+        return Video::findOrFail($videoId)
+            ->labels;
     }
 }
