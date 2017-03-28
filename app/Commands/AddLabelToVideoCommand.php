@@ -26,7 +26,7 @@ class AddLabelToVideoCommand
         /** @var Video $video */
         $video = Video::findOrFail($this->videoId);
         try {
-            $label = Label::where('name', $this->labelName)->firstOrFail();
+            $label = Label::findByName($this->labelName)->firstOrFail();
         } catch (ModelNotFoundException $exception) {
             $label = new Label();
             $label->name = $this->labelName;
