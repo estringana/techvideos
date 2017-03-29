@@ -45,4 +45,9 @@ class VideosController extends Controller
         return Video::findOrFail($videoId)
             ->labels;
     }
+
+    public function getAll()
+    {
+        return Video::all();
+    }
 }
