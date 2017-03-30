@@ -14,6 +14,7 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 use App\Label;
 use App\Video;
+use App\Vote;
 
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     static $password;
@@ -35,9 +36,14 @@ $factory->define(Video::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(Label::class, function (Faker\Generator $faker) {
+$factory->define(Label::class, function () {
     return [
-        'name' => $faker->word,
+        'name' => 'Label'.uniqid(),
     ];
 });
 
+$factory->define(Vote::class, function () {
+    return [
+        'vote' => (rand(0,10) % 2 == 0) ? Vote::VOTE_GOOD: Vote::VOTE_BAD
+    ];
+});
