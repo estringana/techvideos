@@ -3,11 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Commands\AddLabelToVideoCommand;
+use App\Commands\AddVoteToVideoCommand;
 use App\Http\Requests\AddLabelRequest;
+use App\Http\Requests\AddVoteRequest;
 use App\Http\Requests\CreateVideoRequest;
 use App\Label;
 use App\Video;
+use App\Vote;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Request;
 
 class VideosController extends Controller
 {
@@ -49,5 +53,18 @@ class VideosController extends Controller
     public function getAll()
     {
         return Video::all();
+    }
+
+    public function addVote(AddVoteRequest $request, $videoId)
+    {
+        $command = new AddVoteToVideoCommand($videoId, $request->input('vote'));
+        $command->execute();
+
+        return response('', 201);
+    }
+
+    public function getVotes($videoId)
+    {
+        return Video::findOrFail($videoId)->votes;
     }
 }
