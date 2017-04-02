@@ -15,5 +15,4 @@ class Label extends Model
     {
         return $query->where('name', $name);
     }
-
 }

@@ -26,4 +26,9 @@ class Video extends Model
     {
         $this->votes()->save($vote);
     }
+
+    public function scopeLatest($query)
+    {
+        return $query->orderBy('created_at', 'desc')->get();
+    }
 }
