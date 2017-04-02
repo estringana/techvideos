@@ -14,22 +14,19 @@ class GettingLatestVideosTest extends TestCase
 {
     use DatabaseMigrations;
 
+    protected function getVideoWithCreatedAt($created_at): Video
+    {
+        return factory(Video::class)->create([
+            'created_at' => $created_at,
+        ]);
+    }
+
     /** @test */
     public function it_get_the_list_of_videos_order_by_last_added_first()
     {
-
-        /** @var Video $video01 */
-        $video01 = factory(Video::class)->create([
-            'created_at' => '2017-01-01',
-        ]);
-        /** @var Video $video02 */
-        $video02 = factory(Video::class)->create([
-            'created_at' => '2017-01-02',
-        ]);
-        /** @var Video $video03 */
-        $video03 = factory(Video::class)->create([
-            'created_at' => '2017-01-03',
-        ]);
+        $video01 = $this->getVideoWithCreatedAt('2017-01-01');
+        $video02 = $this->getVideoWithCreatedAt('2017-01-02');
+        $video03 = $this->getVideoWithCreatedAt('2017-01-03');
 
         /** @var TestResponse $response */
         $this->get('/videos/latest')
