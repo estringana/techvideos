@@ -67,4 +67,9 @@ class VideosController extends Controller
     {
         return Video::findOrFail($videoId)->votes;
     }
+
+    public function latest()
+    {
+        return Video::latest();
+    }
 }

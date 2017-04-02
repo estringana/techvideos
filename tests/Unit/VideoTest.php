@@ -24,4 +24,25 @@ class VideoTest extends TestCase
 
         $this->assertCount(1, $video->labels);
     }
+
+    /** @test */
+    public function videos_are_returneded_by_created_last_first()
+    {
+        $video01 = factory(Video::class)->create([
+            'created_at' => '2017-01-01',
+        ]);
+        $video02 = factory(Video::class)->create([
+            'created_at' => '2017-01-02',
+        ]);
+        $video03 = factory(Video::class)->create([
+            'created_at' => '2017-01-03',
+        ]);
+
+        $videos = Video::latest();
+
+        $this->assertCount(3, $videos);
+        $this->assertEquals($video03->id, $videos->get(0)->id);
+        $this->assertEquals($video02->id, $videos->get(1)->id);
+        $this->assertEquals($video01->id, $videos->get(2)->id);
+    }
 }
