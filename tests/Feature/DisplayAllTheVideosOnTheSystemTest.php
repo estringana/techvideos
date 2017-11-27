@@ -19,7 +19,7 @@ class DisplayAllTheVideosOnTheSystemTest extends TestCase
         /** @var Collection $videos */
         $videos = factory(Video::class, 3)->create();
 
-        $this->get('/videos')
+        $this->get('/api/videos')
             ->assertStatus(200)
             ->assertJson($videos->toArray());
     }
@@ -27,7 +27,7 @@ class DisplayAllTheVideosOnTheSystemTest extends TestCase
     /** @test */
     public function it_should_return_none_if_there_is_no_videos_on_the_system()
     {
-        $this->get('/videos')
+        $this->get('/api/videos')
             ->assertStatus(200)
             ->assertJson([]);
     }

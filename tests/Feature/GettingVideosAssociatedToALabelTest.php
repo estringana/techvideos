@@ -25,7 +25,7 @@ class GettingVideosAssociatedToALabelTest extends TestCase
             $video->addLabel($label);
         });
 
-        $this->get('/labels/' . $label->name . '/videos')
+        $this->get('/api/labels/' . $label->name . '/videos')
             ->assertStatus(200)
             ->assertJson($videos->toArray());
     }
@@ -36,7 +36,7 @@ class GettingVideosAssociatedToALabelTest extends TestCase
         /** @var Label $label */
         $label = factory(Label::class)->create();
 
-        $this->get('/labels/' . $label->name . '/videos')
+        $this->get('/api/labels/' . $label->name . '/videos')
             ->assertStatus(200)
             ->assertJson([]);
     }
@@ -45,7 +45,7 @@ class GettingVideosAssociatedToALabelTest extends TestCase
     public function it_should_throw_exception_if_label_do_not_exists()
     {
         $investedLabelName = 'Something here';
-        $this->get('/labels/' . $investedLabelName . '/videos')
+        $this->get('/api/labels/' . $investedLabelName . '/videos')
             ->assertStatus(404);
     }
 }

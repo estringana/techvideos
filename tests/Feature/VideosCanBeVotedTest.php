@@ -19,7 +19,7 @@ class VideosCanBeVotedTest extends TestCase
         $video = factory(Video::class)->create([]);
 
         $this->post(
-            sprintf('/videos/%s/votes', $video->id),
+            sprintf('/api/videos/%s/votes', $video->id),
             [
                 'vote' => Vote::VOTE_GOOD,
             ]
@@ -35,7 +35,7 @@ class VideosCanBeVotedTest extends TestCase
         $video = factory(Video::class)->create([]);
 
         $this->post(
-            sprintf('/videos/%s/votes', $video->id),
+            sprintf('/api/videos/%s/votes', $video->id),
             [
                 'vote' => 'RamdomString',
             ]
@@ -54,7 +54,7 @@ class VideosCanBeVotedTest extends TestCase
             'video_id' => (string)$video->id,
         ]);
 
-        $this->get(sprintf('/videos/%s/votes', $video->id))
+        $this->get(sprintf('/api/videos/%s/votes', $video->id))
             ->assertStatus(200)
             ->assertJsonFragment($votes->toArray());
     }

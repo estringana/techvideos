@@ -23,7 +23,7 @@ class LabelsCanBeAddedToVideosTest extends TestCase
         $video = factory(Video::class)->create([]);
 
         $this->post(
-            sprintf('/videos/%s/labels', $video->id),
+            sprintf('/api/videos/%s/labels', $video->id),
             ['name' => $label->name]
         )->assertStatus(201);
 
@@ -37,7 +37,7 @@ class LabelsCanBeAddedToVideosTest extends TestCase
         $video = factory(Video::class)->create([]);
 
         $this->post(
-            sprintf('/videos/%s/labels', $video->id),
+            sprintf('/api/videos/%s/labels', $video->id),
             ['name' => 'NonExistingLabelYet']
         )->assertStatus(201);
 
