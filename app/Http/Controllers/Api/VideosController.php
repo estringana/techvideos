@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Commands\AddLabelToVideoCommand;
 use App\Commands\AddVoteToVideoCommand;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\AddLabelRequest;
 use App\Http\Requests\AddVoteRequest;
 use App\Http\Requests\CreateVideoRequest;

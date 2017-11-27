@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateLabelRequest;
 use App\Label;
-use Illuminate\Http\Request;
 
 class LabelsController extends Controller
 {
@@ -20,7 +20,7 @@ class LabelsController extends Controller
     public function view($labelName)
     {
         /** @var Label $label */
-        $label =  Label::findByName($labelName)
+        $label = Label::findByName($labelName)
             ->firstOrfail();
 
         return $label->videos;
