@@ -3,8 +3,7 @@
         <div class="page-header">
             <h1>Videos on label {{label}}</h1>
         </div>
-        <videoThumbnail v-for="video in videos" :name="video.name" :link="getUrl(video)" :speaker="video.speaker"
-                        size="col-sm-6 col-md-4"></videoThumbnail>
+        <video-list :videos="videos"></video-list>
     </div>
 </template>
 
@@ -12,7 +11,7 @@
     export default {
         data() {
             return {
-                label: this.$route.params.id ,
+                label: this.$route.params.id,
                 videos: [],
             }
         },

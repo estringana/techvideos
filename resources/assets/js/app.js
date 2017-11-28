@@ -15,7 +15,9 @@ import router from './routes'
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('videoThumbnail', require('./components/VideoThumbnail.vue'));
+Vue.component('video-thumbnail', require('./components/VideoThumbnail.vue'));
+Vue.component('video-list', require('./components/VideoList.vue'));
+Vue.component('label-list', require('./components/LabelList.vue'));
 Vue.component('thumbnail', require('./components/Bootstrap/Thumbnail.vue'));
 
 const app = new Vue({

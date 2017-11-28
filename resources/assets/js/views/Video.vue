@@ -7,9 +7,7 @@
             <p>
                 {{video.description}}
             </p>
-            <p>
-                <span v-for="label in labels" :class="randomLabelStyle">{{label.name}}</span>
-            </p>
+            <label-list :labels="labels"></label-list>
         </div>
     </div>
 </template>
