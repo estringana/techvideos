@@ -11,14 +11,6 @@
 |
 */
 
-Route::get('/videos', 'VideosController@getAll');
-Route::get('/videos/latest', 'VideosController@latest');
-Route::post('/videos', 'VideosController@create');
-Route::get('/videos/{id}', 'VideosController@view');
-Route::post('/videos/{id}/labels', 'VideosController@addLabel');
-Route::get('/videos/{id}/labels', 'VideosController@getLabels');
-Route::post('/videos/{id}/votes', 'VideosController@addVote');
-Route::get('/videos/{id}/votes', 'VideosController@getVotes');
+Auth::routes();
 
-Route::get('/labels/{label}/videos', 'LabelsController@view');
-Route::post('/labels', 'LabelsController@create');
+Route::get('/', 'HomeController@index');

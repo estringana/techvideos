@@ -17,7 +17,7 @@ class VideosCanBeAccessedTest extends TestCase
     {
         $video = factory(Video::class)->create();
 
-        $this->get('/videos/' . $video->id)->assertStatus(200)
+        $this->get('/api/videos/' . $video->id)->assertStatus(200)
             ->assertJson(
                 [
                     'name' => $video->name,
@@ -31,6 +31,6 @@ class VideosCanBeAccessedTest extends TestCase
     /** @test */
     public function it_should_return_404_error_when_accessing_to_a_video_which_dont_exists()
     {
-        $this->get('/videos/12345')->assertStatus(404);
+        $this->get('/api/videos/12345')->assertStatus(404);
     }
 }

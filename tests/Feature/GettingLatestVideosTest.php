@@ -29,7 +29,7 @@ class GettingLatestVideosTest extends TestCase
         $video03 = $this->getVideoWithCreatedAt('2017-01-03');
 
         /** @var TestResponse $response */
-        $this->get('/videos/latest')
+        $this->get('/api/videos/latest')
             ->assertStatus(200)
             ->assertJson([
                 $video03->toArray(),

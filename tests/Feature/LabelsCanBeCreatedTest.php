@@ -15,7 +15,7 @@ class LabelsCanBeCreatedTest extends TestCase
     /** @test */
     public function labels_can_be_added()
     {
-        $this->post('/labels',
+        $this->post('/api/labels',
             [
                 'name' => 'Some random text',
             ]
@@ -27,7 +27,7 @@ class LabelsCanBeCreatedTest extends TestCase
     /** @test */
     public function it_requires_the_label_to_not_be_empty()
     {
-        $this->post('/labels',
+        $this->post('/api/labels',
             [
                 'name' => '',
             ]
@@ -43,7 +43,7 @@ class LabelsCanBeCreatedTest extends TestCase
             'name' => 'Duplicated label',
         ]);
 
-        $this->post('/labels',
+        $this->post('/api/labels',
             [
                 'name' => $label->name,
             ]

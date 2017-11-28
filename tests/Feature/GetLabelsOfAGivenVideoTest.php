@@ -25,7 +25,7 @@ class GetLabelsOfAGivenVideoTest extends TestCase
             $video->addLabel($label);
         });
 
-        $this->get('/videos/' . $video->id . '/labels')
+        $this->get('/api/videos/' . $video->id . '/labels')
             ->assertStatus(200)
             ->assertJson($labels->toArray());
     }
@@ -34,7 +34,7 @@ class GetLabelsOfAGivenVideoTest extends TestCase
     {
         /** @var Video $video */
         $video = factory(Video::class)->create([]);
-        $this->get('/videos/' . $video->id . '/labels')
+        $this->get('/api/videos/' . $video->id . '/labels')
             ->assertStatus(200)
             ->assertJson([]);
     }
@@ -42,7 +42,7 @@ class GetLabelsOfAGivenVideoTest extends TestCase
     public function it_returns_404_if_video_does_not_exists()
     {
         $nonExistingVideoId = 12345;
-        $this->get('/videos/' . $nonExistingVideoId . '/labels')
+        $this->get('/api/videos/' . $nonExistingVideoId . '/labels')
             ->assertStatus(404);
     }
 }

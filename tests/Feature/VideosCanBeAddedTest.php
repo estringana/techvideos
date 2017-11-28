@@ -69,7 +69,7 @@ class VideosCanBeAddedTest extends TestCase
      */
     public function videos_can_be_added($name, $description, $speaker, $link, $expectedStatus, $videosCreated)
     {
-        $this->post('/videos',
+        $this->post('/api/videos',
             [
                 'name' => $name,
                 'description' => $description,
