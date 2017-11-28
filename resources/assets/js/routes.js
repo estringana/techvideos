@@ -8,6 +8,10 @@ let routes = [
     {
         path: '/videos/:id',
         component: require('./views/Video')
+    },
+    {
+        path: '/labels/:id',
+        component: require('./views/Label')
     }
 ];
 

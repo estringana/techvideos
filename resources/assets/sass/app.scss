@@ -7,3 +7,12 @@
 
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+
+.label-list {
+  .label {
+    display: inline-block;
+    margin-left: 2px;
+    margin-right: 2px;
+  }
+}

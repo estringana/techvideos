@@ -25,4 +25,9 @@ class LabelsController extends Controller
 
         return $label->videos;
     }
+
+    public function getAll()
+    {
+        return Label::all();
+    }
 }

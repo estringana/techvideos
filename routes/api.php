@@ -25,6 +25,7 @@ Route::group(['namespace' => 'Api'], function () {
 
     Route::get('/labels/{label}/videos', 'LabelsController@view');
     Route::post('/labels', 'LabelsController@create');
+    Route::get('/labels', 'LabelsController@getAll');
 });
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {

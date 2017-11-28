@@ -1,16 +1,15 @@
 <template>
     <div :class="size">
         <div class="thumbnail">
-            <img :src="image">
+            <router-link :to="link">
+                <img :src="image">
+            </router-link>
             <div class="caption">
-                <h3>{{title}}</h3>
+                <router-link :to="link">
+                    <h3>{{title}}</h3>
+                </router-link>
                 <h5>{{subtitle}}</h5>
                 <p v-if="description">{{description}}</p>
-                <p>
-                    <router-link :to="link">
-                        <a class="btn btn-primary" role="button">{{cta}}</a>
-                    </router-link>
-                </p>
             </div>
         </div>
     </div>
@@ -18,6 +17,6 @@
 
 <script>
     export default {
-        props: ['size', 'image', 'title', 'subtitle', 'description', 'link', 'cta'],
+        props: ['size', 'image', 'title', 'subtitle', 'description', 'link'],
     }
 </script>
