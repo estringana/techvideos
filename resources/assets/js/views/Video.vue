@@ -32,9 +32,9 @@
             }
         },
         mounted() {
-            axios.get('/videos/' + this.$route.params.id).then(response => {
+            axios.get('/api/videos/' + this.$route.params.id).then(response => {
                 this.video = response.data;
-                axios.get('/videos/' + this.video.id + '/labels')
+                axios.get('/api/videos/' + this.video.id + '/labels')
                     .then(response => this.labels = response.data);
             });
         }

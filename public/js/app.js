@@ -3317,6 +3317,7 @@ __webpack_require__(34);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+Vue.component('videoThumbnail', __webpack_require__(57));
 Vue.component('thumbnail', __webpack_require__(39));
 
 var app = new Vue({
@@ -4197,10 +4198,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['name', 'description', 'link', 'speaker', 'size'],
-    mounted: function mounted() {
-        console.log('Component mounted.');
-    }
+    props: ['size', 'image', 'title', 'subtitle', 'description', 'link', 'cta']
 });
 
 /***/ }),
@@ -4209,8 +4207,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
 //
 //
 //
@@ -4227,19 +4223,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     mounted: function mounted() {
         var _this = this;
 
-        axios.get('/videos/latest').then(function (response) {
+        axios.get('/api/videos/latest').then(function (response) {
             return _this.videos = response.data;
         });
     },
 
     methods: {
         getUrl: function getUrl(video) {
-            return '/videos/' + video.id;
-        }
-    },
-    computed: {
-        groupedVideos: function groupedVideos() {
-            return _.chunk(this.videos, 3);
+            return '/api/videos/' + video.id;
         }
     }
 });
@@ -4286,9 +4277,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     mounted: function mounted() {
         var _this = this;
 
-        axios.get('/videos/' + this.$route.params.id).then(function (response) {
+        axios.get('/api/videos/' + this.$route.params.id).then(function (response) {
             _this.video = response.data;
-            axios.get('/videos/' + _this.video.id + '/labels').then(function (response) {
+            axios.get('/api/videos/' + _this.video.id + '/labels').then(function (response) {
                 return _this.labels = response.data;
             });
         });
@@ -34124,7 +34115,7 @@ var Component = __webpack_require__(3)(
   /* cssModules */
   null
 )
-Component.options.__file = "/Users/aruiz/Personal/development/techvideos/resources/assets/js/components/Bootstrap/Thumbnail.vue"
+Component.options.__file = "/Users/aruiz/Documents/Personal/development/techvideos/resources/assets/js/components/Bootstrap/Thumbnail.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Thumbnail.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -34158,7 +34149,7 @@ var Component = __webpack_require__(3)(
   /* cssModules */
   null
 )
-Component.options.__file = "/Users/aruiz/Personal/development/techvideos/resources/assets/js/views/Home.vue"
+Component.options.__file = "/Users/aruiz/Documents/Personal/development/techvideos/resources/assets/js/views/Home.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Home.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -34192,7 +34183,7 @@ var Component = __webpack_require__(3)(
   /* cssModules */
   null
 )
-Component.options.__file = "/Users/aruiz/Personal/development/techvideos/resources/assets/js/views/Video.vue"
+Component.options.__file = "/Users/aruiz/Documents/Personal/development/techvideos/resources/assets/js/views/Video.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Video.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -34223,11 +34214,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "thumbnail"
   }, [_c('img', {
     attrs: {
-      "src": "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjQyIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDI0MiAyMDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjwhLS0KU291cmNlIFVSTDogaG9sZGVyLmpzLzEwMCV4MjAwCkNyZWF0ZWQgd2l0aCBIb2xkZXIuanMgMi42LjAuCkxlYXJuIG1vcmUgYXQgaHR0cDovL2hvbGRlcmpzLmNvbQooYykgMjAxMi0yMDE1IEl2YW4gTWFsb3BpbnNreSAtIGh0dHA6Ly9pbXNreS5jbwotLT48ZGVmcz48c3R5bGUgdHlwZT0idGV4dC9jc3MiPjwhW0NEQVRBWyNob2xkZXJfMTViMmU1NzYyOGUgdGV4dCB7IGZpbGw6I0FBQUFBQTtmb250LXdlaWdodDpib2xkO2ZvbnQtZmFtaWx5OkFyaWFsLCBIZWx2ZXRpY2EsIE9wZW4gU2Fucywgc2Fucy1zZXJpZiwgbW9ub3NwYWNlO2ZvbnQtc2l6ZToxMnB0IH0gXV0+PC9zdHlsZT48L2RlZnM+PGcgaWQ9ImhvbGRlcl8xNWIyZTU3NjI4ZSI+PHJlY3Qgd2lkdGg9IjI0MiIgaGVpZ2h0PSIyMDAiIGZpbGw9IiNFRUVFRUUiLz48Zz48dGV4dCB4PSI4OS44NTkzNzUiIHk9IjEwNS40Ij4yNDJ4MjAwPC90ZXh0PjwvZz48L2c+PC9zdmc+"
+      "src": _vm.image
     }
   }), _vm._v(" "), _c('div', {
     staticClass: "caption"
-  }, [_c('h3', [_vm._v(_vm._s(_vm.name))]), _vm._v(" "), _c('h5', [_vm._v("by @" + _vm._s(_vm.speaker))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(_vm.description))]), _vm._v(" "), _c('p', [_c('router-link', {
+  }, [_c('h3', [_vm._v(_vm._s(_vm.title))]), _vm._v(" "), _c('h5', [_vm._v(_vm._s(_vm.subtitle))]), _vm._v(" "), (_vm.description) ? _c('p', [_vm._v(_vm._s(_vm.description))]) : _vm._e(), _vm._v(" "), _c('p', [_c('router-link', {
     attrs: {
       "to": _vm.link
     }
@@ -34236,7 +34227,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "role": "button"
     }
-  }, [_vm._v("Link to video")])])], 1)])])])
+  }, [_vm._v(_vm._s(_vm.cta))])])], 1)])])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -34253,20 +34244,15 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "container"
-  }, _vm._l((_vm.groupedVideos), function(row) {
-    return _c('div', {
-      staticClass: "row"
-    }, _vm._l((row), function(video) {
-      return _c('thumbnail', {
-        attrs: {
-          "name": video.name,
-          "description": video.description,
-          "link": _vm.getUrl(video),
-          "speaker": video.speaker,
-          "size": "col-sm-6 col-md-4"
-        }
-      })
-    }))
+  }, _vm._l((_vm.videos), function(video) {
+    return _c('videoThumbnail', {
+      attrs: {
+        "name": video.name,
+        "link": _vm.getUrl(video),
+        "speaker": video.speaker,
+        "size": "col-sm-6 col-md-4"
+      }
+    })
   }))
 },staticRenderFns: []}
 module.exports.render._withStripped = true
@@ -43661,6 +43647,92 @@ module.exports = function(module) {
 __webpack_require__(11);
 module.exports = __webpack_require__(12);
 
+
+/***/ }),
+/* 48 */,
+/* 49 */,
+/* 50 */,
+/* 51 */,
+/* 52 */,
+/* 53 */,
+/* 54 */,
+/* 55 */,
+/* 56 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['name', 'link', 'speaker', 'size'],
+    computed: {
+        subtitle: function subtitle() {
+            return 'by @' + this.speaker;
+        }
+    }
+});
+
+/***/ }),
+/* 57 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(3)(
+  /* script */
+  __webpack_require__(56),
+  /* template */
+  __webpack_require__(58),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Users/aruiz/Documents/Personal/development/techvideos/resources/assets/js/components/VideoThumbnail.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] VideoThumbnail.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-1f7f09f3", Component.options)
+  } else {
+    hotAPI.reload("data-v-1f7f09f3", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 58 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('thumbnail', {
+    attrs: {
+      "title": _vm.name,
+      "link": _vm.link,
+      "subtitle": _vm.subtitle,
+      "size": "col-sm-6 col-md-4",
+      "cta": "Watch video",
+      "image": "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjQyIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDI0MiAyMDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjwhLS0KU291cmNlIFVSTDogaG9sZGVyLmpzLzEwMCV4MjAwCkNyZWF0ZWQgd2l0aCBIb2xkZXIuanMgMi42LjAuCkxlYXJuIG1vcmUgYXQgaHR0cDovL2hvbGRlcmpzLmNvbQooYykgMjAxMi0yMDE1IEl2YW4gTWFsb3BpbnNreSAtIGh0dHA6Ly9pbXNreS5jbwotLT48ZGVmcz48c3R5bGUgdHlwZT0idGV4dC9jc3MiPjwhW0NEQVRBWyNob2xkZXJfMTViMmU1NzYyOGUgdGV4dCB7IGZpbGw6I0FBQUFBQTtmb250LXdlaWdodDpib2xkO2ZvbnQtZmFtaWx5OkFyaWFsLCBIZWx2ZXRpY2EsIE9wZW4gU2Fucywgc2Fucy1zZXJpZiwgbW9ub3NwYWNlO2ZvbnQtc2l6ZToxMnB0IH0gXV0+PC9zdHlsZT48L2RlZnM+PGcgaWQ9ImhvbGRlcl8xNWIyZTU3NjI4ZSI+PHJlY3Qgd2lkdGg9IjI0MiIgaGVpZ2h0PSIyMDAiIGZpbGw9IiNFRUVFRUUiLz48Zz48dGV4dCB4PSI4OS44NTkzNzUiIHk9IjEwNS40Ij4yNDJ4MjAwPC90ZXh0PjwvZz48L2c+PC9zdmc+"
+    }
+  })
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-1f7f09f3", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
