@@ -17,6 +17,7 @@ class CreateVotesTable extends Migration
         Schema::create('votes', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('video_id')->unsigned();
+            $table->integer('user_id')->unsigned()->nullable();
             $table->enum('vote', array(Vote::VOTE_GOOD, Vote::VOTE_BAD));
             $table->timestamps();
         });

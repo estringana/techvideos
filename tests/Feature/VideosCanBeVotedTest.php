@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\User;
 use App\Video;
 use App\Vote;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -24,7 +25,6 @@ class VideosCanBeVotedTest extends TestCase
                 'vote' => Vote::VOTE_GOOD,
             ]
         )->assertStatus(201);
-
         $this->assertCount(1, $video->votes);
     }
 
@@ -57,5 +57,26 @@ class VideosCanBeVotedTest extends TestCase
         $this->get(sprintf('/api/videos/%s/votes', $video->id))
             ->assertStatus(200)
             ->assertJsonFragment($votes->toArray());
+    }
+
+    /** @test */
+    public function a_authenticated_user_can_vote_videos()
+    {
+        $this->disableExceptionHandling();
+        /** @var User $user */
+        $user = factory(User::class)->create();
+        /** @var Video $video */
+        $video = factory(Video::class)->create([]);
+
+        $this->actingAs($user)
+            ->post(
+                sprintf('/api/videos/%s/votes', $video->id),
+                [
+                    'vote' => Vote::VOTE_GOOD,
+                ]
+            )->assertStatus(201);
+
+        $this->assertCount(1, $video->votes);
+        $this->assertCount(1, $user->votes);
     }
 }

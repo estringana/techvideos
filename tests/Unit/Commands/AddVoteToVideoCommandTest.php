@@ -4,11 +4,11 @@ namespace Tests\Unit\Commands;
 
 use App\Commands\AddVoteToVideoCommand;
 use App\Exceptions\InvalidVoteException;
+use App\User;
 use App\Video;
 use App\Vote;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Tests\TestCase;
 
 class AddVoteToVideoCommandTest extends TestCase
 {
@@ -43,6 +43,27 @@ class AddVoteToVideoCommandTest extends TestCase
         $notRelevant = 12345;
         $this->expectException(InvalidVoteException::class);
 
-        $command = new AddVoteToVideoCommand($notRelevant, 'InvalidVote');
+        new AddVoteToVideoCommand($notRelevant, 'InvalidVote');
+    }
+
+    /** @test */
+    public function videos_can_be_voted_anonimously()
+    {
+        $video = factory(Video::class)->create();
+        $command = new AddVoteToVideoCommand($video->id, Vote::VOTE_BAD);
+        $command->execute();
+
+        $this->assertNull($video->votes->first()->user_id);
+    }
+
+    /** @test */
+    public function videos_can_be_voted_by_a_user()
+    {
+        $video = factory(Video::class)->create();
+        $user = factory(User::class)->create();
+        $command = new AddVoteToVideoCommand($video->id, Vote::VOTE_BAD, $user->id);
+        $command->execute();
+
+        $this->assertEquals($video->votes->first()->user_id, $user->id);
     }
 }

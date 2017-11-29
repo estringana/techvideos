@@ -8,11 +8,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AddLabelRequest;
 use App\Http\Requests\AddVoteRequest;
 use App\Http\Requests\CreateVideoRequest;
-use App\Label;
 use App\Video;
-use App\Vote;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class VideosController extends Controller
 {
@@ -58,7 +55,8 @@ class VideosController extends Controller
 
     public function addVote(AddVoteRequest $request, $videoId)
     {
-        $command = new AddVoteToVideoCommand($videoId, $request->input('vote'));
+        $userId = Auth::user()->id ?? null;
+        $command = new AddVoteToVideoCommand($videoId, $request->input('vote'), $userId);
         $command->execute();
 
         return response('', 201);
