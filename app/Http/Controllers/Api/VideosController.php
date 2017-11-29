@@ -55,8 +55,7 @@ class VideosController extends Controller
 
     public function addVote(AddVoteRequest $request, $videoId)
     {
-        $userId = Auth::user()->id ?? null;
-        $command = new AddVoteToVideoCommand($videoId, $request->input('vote'), $userId);
+        $command = new AddVoteToVideoCommand($videoId, $request->input('vote'), Auth::id());
         $command->execute();
 
         return response('', 201);
