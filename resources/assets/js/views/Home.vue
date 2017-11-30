@@ -9,6 +9,8 @@
 </template>
 
 <script>
+    import Video from '../app/repository/Video.js';
+
     export default {
         data() {
             return {
@@ -17,7 +19,8 @@
             }
         },
         mounted() {
-            axios.get('/api/videos/latest').then(response => this.videos = response.data);
+            let videoRepository = new Video();
+            videoRepository.latest().then(response => this.videos = response.data)
             axios.get('/api/labels').then(response => this.labels = response.data);
         }
     }
