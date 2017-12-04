@@ -7,6 +7,7 @@ use App\Video;
 use App\Vote;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Collection;
+use Laravel\Passport\Passport;
 use Tests\TestCase;
 
 class VideosCanBeVotedTest extends TestCase
@@ -14,8 +15,10 @@ class VideosCanBeVotedTest extends TestCase
     use DatabaseMigrations;
 
     /** @test */
-    public function a_video_can_be_voted()
+    public function a_video_can_be_voted_when_authenticated()
     {
+        Passport::actingAs(factory(User::class)->create(), []);
+
         /** @var Video $video */
         $video = factory(Video::class)->create([]);
 
@@ -51,7 +54,7 @@ class VideosCanBeVotedTest extends TestCase
         $video = factory(Video::class)->create([]);
         /** @var Collection $votes */
         $votes = factory(Vote::class)->create([
-            'video_id' => (string)$video->id,
+            'video_id' => $video->id,
         ]);
 
         $this->get(sprintf('/api/videos/%s/votes', $video->id))
@@ -60,16 +63,15 @@ class VideosCanBeVotedTest extends TestCase
     }
 
     /** @test */
-    public function a_authenticated_user_can_vote_videos()
+    public function users_can_vote_videos_when_authenticated()
     {
-        $this->disableExceptionHandling();
-        /** @var User $user */
-        $user = factory(User::class)->create();
         /** @var Video $video */
         $video = factory(Video::class)->create([]);
-
-        $this->actingAs($user)
-            ->post(
+        /** @var User $user */
+        $user = factory(User::class)->create();
+        
+        Passport::actingAs($user, []);
+        $this->post(
                 sprintf('/api/videos/%s/votes', $video->id),
                 [
                     'vote' => Vote::VOTE_GOOD,
@@ -78,5 +80,24 @@ class VideosCanBeVotedTest extends TestCase
 
         $this->assertCount(1, $video->votes);
         $this->assertCount(1, $user->votes);
+    }
+    
+    /** @test */
+    public function videos_can_not_be_voted_if_not_authenticated()
+    {
+        /** @var Video $video */
+        $video = factory(Video::class)->create([]);
+        /** @var User $user */
+        $user = factory(User::class)->create();
+
+        $this->post(
+            sprintf('/api/videos/%s/votes', $video->id),
+            [
+                'vote' => Vote::VOTE_GOOD,
+            ]
+        )->assertStatus(302);
+
+        $this->assertCount(0, $video->votes);
+        $this->assertCount(0, $user->votes);
     }
 }

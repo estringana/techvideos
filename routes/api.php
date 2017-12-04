@@ -14,17 +14,19 @@ use Illuminate\Http\Request;
 */
 
 Route::group(['namespace' => 'Api'], function () {
+    Route::group(['middleware' => 'auth:api'], function () {
+        Route::post('/videos', 'VideosController@create');
+        Route::post('/videos/{id}/labels', 'VideosController@addLabel');
+        Route::post('/videos/{id}/votes', 'VideosController@addVote');
+        Route::post('/labels', 'LabelsController@create');
+    });
+    
     Route::get('/videos', 'VideosController@getAll');
     Route::get('/videos/latest', 'VideosController@latest');
-    Route::post('/videos', 'VideosController@create');
     Route::get('/videos/{id}', 'VideosController@view');
-    Route::post('/videos/{id}/labels', 'VideosController@addLabel');
     Route::get('/videos/{id}/labels', 'VideosController@getLabels');
-    Route::post('/videos/{id}/votes', 'VideosController@addVote');
     Route::get('/videos/{id}/votes', 'VideosController@getVotes');
-
     Route::get('/labels/{label}/videos', 'LabelsController@view');
-    Route::post('/labels', 'LabelsController@create');
     Route::get('/labels', 'LabelsController@getAll');
 });
 

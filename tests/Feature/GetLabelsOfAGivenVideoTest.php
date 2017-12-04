@@ -30,6 +30,7 @@ class GetLabelsOfAGivenVideoTest extends TestCase
             ->assertJson($labels->toArray());
     }
 
+    /** @test */
     public function it_returns_empty_if_video_has_no_labels()
     {
         /** @var Video $video */
@@ -39,6 +40,7 @@ class GetLabelsOfAGivenVideoTest extends TestCase
             ->assertJson([]);
     }
 
+    /** @test */
     public function it_returns_404_if_video_does_not_exists()
     {
         $nonExistingVideoId = 12345;
