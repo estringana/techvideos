@@ -6,6 +6,14 @@
     </div>
 </template>
 
+<style scoped>
+    .label {
+        display: inline-block;
+        margin-left: 2px;
+        margin-right: 2px;
+    }
+</style>
+
 <script>
     export default {
         props: ['labels'],
