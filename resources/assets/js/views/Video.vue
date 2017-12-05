@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="container">
         <div v-if="video">
             <div class="page-header">
                 <h1>{{video.name}} <small>by @{{video.speaker}}</small></h1>
@@ -7,12 +7,18 @@
             <p>
                 {{video.description}}
             </p>
+            <p>
+                <div>Like</div>
+                <div>Dislike</div>
+            </p>
             <label-list :labels="labels"></label-list>
         </div>
     </div>
 </template>
 
 <script>
+    import VideoRepository from '../app/repository/Video.js';
+
     export default {
         data() {
             return {
@@ -30,9 +36,11 @@
             }
         },
         mounted() {
-            axios.get('/api/videos/' + this.$route.params.id).then(response => {
+            let videoRepository = new VideoRepository(axios);
+            let videoId = this.$route.params.id;
+            videoRepository.get(videoId).then(response => {
                 this.video = response.data;
-                axios.get('/api/videos/' + this.video.id + '/labels')
+                videoRepository.labels(videoId)
                     .then(response => this.labels = response.data);
             });
         }

@@ -9,7 +9,8 @@
 </template>
 
 <script>
-    import Video from '../app/repository/Video.js';
+    import VideoRepository from '../app/repository/Video.js';
+    import LabelRepository from '../app/repository/Label.js';
 
     export default {
         data() {
@@ -19,9 +20,10 @@
             }
         },
         mounted() {
-            let videoRepository = new Video();
+            let videoRepository = new VideoRepository(axios);
+            let labelRepository = new LabelRepository(axios);
             videoRepository.latest().then(response => this.videos = response.data)
-            axios.get('/api/labels').then(response => this.labels = response.data);
+            labelRepository.all().then(response => this.labels = response.data);
         }
     }
 </script>

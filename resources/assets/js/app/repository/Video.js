@@ -1,7 +1,17 @@
-require('axios');
+export default class VideoRepository {
+    constructor(httpClient) {
+        this.httpClient = httpClient;
+    }
 
-export default class Video {
     latest() {
-        return axios.get('/api/videos/latest');
+        return this.httpClient.get('/api/videos/latest');
+    }
+
+    get(videoId) {
+        return this.httpClient.get('/api/videos/' + videoId);
+    }
+
+    labels(videoId) {
+        return this.httpClient.get('/api/videos/' + videoId + '/labels');
     }
 }
