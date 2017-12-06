@@ -1,5 +1,3 @@
-- Allow user to like videos on the Front end
-- Only allow one vote and change if different
 - Extract votes repository from videos JS
 - Change test to validate things using http calls instead of directly on the DB
 - Multi tag selector

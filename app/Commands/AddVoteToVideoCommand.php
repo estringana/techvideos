@@ -1,16 +1,17 @@
 <?php
+
 namespace App\Commands;
 
 use App\Exceptions\InvalidVoteException;
-use App\User;
 use App\Video;
 use App\Vote;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class AddVoteToVideoCommand
 {
-    /** @var int  */
+    /** @var int */
     protected $videoId;
-    /** @var string  */
+    /** @var string */
     protected $vote;
     /** @var  int */
     private $userId;
@@ -27,19 +28,33 @@ class AddVoteToVideoCommand
         $this->userId = $userId;
     }
 
-    protected function getVote()
+    protected function getPreviousVote(): ?Vote
+    {
+       return Vote::where('user_id', $this->userId)
+            ->where('video_id', $this->videoId)
+           ->first();
+    }
+
+    protected function createNewVote(): Vote
     {
         $vote = new Vote();
-        $vote->vote = $this->vote;
         $vote->user_id = $this->userId ?? null;
+
         return $vote;
+    }
+
+    protected function getVote(): Vote
+    {
+        return $this->getPreviousVote() ?? $this->createNewVote();
     }
 
     public function execute()
     {
         /** @var Video $video */
         $video = Video::findOrFail($this->videoId);
-        $video->addVote($this->getVote());
+        $vote = $this->getVote();
+        $vote->vote = $this->vote;
+        $video->addVote($vote);
     }
 
     protected function validateVote(string $vote)

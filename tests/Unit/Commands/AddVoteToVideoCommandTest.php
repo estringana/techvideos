@@ -25,19 +25,6 @@ class AddVoteToVideoCommandTest extends TestCase
    }
 
     /** @test */
-    public function it_can_add_votes_to_videos_which_had_already_votes()
-    {
-        $video = factory(Video::class)->create([]);
-        factory(Vote::class, 5)->create([
-            'video_id' => $video->id,
-        ]);
-        $command = new AddVoteToVideoCommand($video->id, Vote::VOTE_BAD);
-        $command->execute();
-
-        $this->assertCount(6, $video->votes);
-    }
-
-    /** @test */
     public function it_can_only_add_valid_votes()
     {
         $notRelevant = 12345;
@@ -65,5 +52,37 @@ class AddVoteToVideoCommandTest extends TestCase
         $command->execute();
 
         $this->assertEquals($video->votes->first()->user_id, $user->id);
+    }
+    
+    /** @test */
+    public function a_user_can_only_have_a_vote_per_video()
+    {
+        $video = factory(Video::class)->create();
+        $user = factory(User::class)->create();
+        factory(Vote::class)->create([
+            'user_id' => $user->id,
+            'video_id' => $video->id,
+            'vote' => Vote::VOTE_GOOD
+        ]);
+        $command = new AddVoteToVideoCommand($video->id, Vote::VOTE_BAD, $user->id);
+        $command->execute();
+
+        $this->assertCount(1, $video->votes);
+    }
+    
+    /** @test */
+    public function a_user_can_change_his_vote_of_a_given_video()
+    {
+        $video = factory(Video::class)->create();
+        $user = factory(User::class)->create();
+        factory(Vote::class)->create([
+            'user_id' => $user->id,
+            'video_id' => $video->id,
+            'vote' => Vote::VOTE_GOOD
+        ]);
+        $command = new AddVoteToVideoCommand($video->id, Vote::VOTE_BAD, $user->id);
+        $command->execute();
+
+        $this->assertEquals($user->votes()->first()->vote, Vote::VOTE_BAD);
     }
 }

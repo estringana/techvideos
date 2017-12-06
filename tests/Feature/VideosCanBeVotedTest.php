@@ -100,4 +100,29 @@ class VideosCanBeVotedTest extends TestCase
         $this->assertCount(0, $video->votes);
         $this->assertCount(0, $user->votes);
     }
+    
+    /** @test */
+    public function last_vote_of_a_user_to_a_video_should_remain_on_db()
+    {
+        Passport::actingAs(factory(User::class)->create(), []);
+
+        /** @var Video $video */
+        $video = factory(Video::class)->create([]);
+
+        $this->post(
+            sprintf('/api/votes/video/%s', $video->id),
+            [
+                'vote' => Vote::VOTE_GOOD,
+            ]
+        )->assertStatus(201);
+
+        $this->post(
+            sprintf('/api/votes/video/%s', $video->id),
+            [
+                'vote' => Vote::VOTE_BAD,
+            ]
+        )->assertStatus(201);
+
+        $this->assertEquals(Vote::VOTE_BAD, $video->votes->first()->vote);
+    }
 }
