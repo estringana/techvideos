@@ -23,7 +23,7 @@ class VideosCanBeVotedTest extends TestCase
         $video = factory(Video::class)->create([]);
 
         $this->post(
-            sprintf('/api/videos/%s/votes', $video->id),
+            sprintf('/api/votes/video/%s', $video->id),
             [
                 'vote' => Vote::VOTE_GOOD,
             ]
@@ -38,7 +38,7 @@ class VideosCanBeVotedTest extends TestCase
         $video = factory(Video::class)->create([]);
 
         $this->post(
-            sprintf('/api/videos/%s/votes', $video->id),
+            sprintf('/api/votes/video/%s', $video->id),
             [
                 'vote' => 'RamdomString',
             ]
@@ -57,9 +57,9 @@ class VideosCanBeVotedTest extends TestCase
             'video_id' => $video->id,
         ]);
 
-        $this->get(sprintf('/api/videos/%s/votes', $video->id))
+        $this->get(sprintf('/api/votes/video/%s', $video->id))
             ->assertStatus(200)
-            ->assertJsonFragment($votes->toArray());
+            ->assertJsonFragment(['video_id' => (string)$video->id]);
     }
 
     /** @test */
@@ -72,7 +72,7 @@ class VideosCanBeVotedTest extends TestCase
         
         Passport::actingAs($user, []);
         $this->post(
-                sprintf('/api/videos/%s/votes', $video->id),
+                sprintf('/api/votes/video/%s', $video->id),
                 [
                     'vote' => Vote::VOTE_GOOD,
                 ]
@@ -91,7 +91,7 @@ class VideosCanBeVotedTest extends TestCase
         $user = factory(User::class)->create();
 
         $this->post(
-            sprintf('/api/videos/%s/votes', $video->id),
+            sprintf('/api/votes/video/%s', $video->id),
             [
                 'vote' => Vote::VOTE_GOOD,
             ]

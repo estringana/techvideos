@@ -14,4 +14,10 @@ export default class VideoRepository {
     labels(videoId) {
         return this.httpClient.get('/api/videos/' + videoId + '/labels');
     }
+
+    vote(videoId, vote) {
+        return this.httpClient.post('/api/votes/video/' + videoId, {
+            vote
+        });
+    }
 }

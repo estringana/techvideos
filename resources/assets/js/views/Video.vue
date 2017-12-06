@@ -8,8 +8,8 @@
                 {{video.description}}
             </p>
             <p>
-                <div>Like</div>
-                <div>Dislike</div>
+                <button v-on:click="like()">Like</button>
+                <button v-on:click="dislike()">Dislike</button>
             </p>
             <label-list :labels="labels"></label-list>
         </div>
@@ -23,7 +23,18 @@
         data() {
             return {
                 video: null,
-                labels: null
+                labels: null,
+                repositories: {
+                    video: null
+                }
+            }
+        },
+        methods: {
+            like() {
+                this.repositories.video.vote(this.video.id, 'good');
+            },
+            dislike() {
+                this.repositories.video.vote(this.video.id, 'bad');
             }
         },
         computed: {
@@ -36,11 +47,11 @@
             }
         },
         mounted() {
-            let videoRepository = new VideoRepository(axios);
+            this.repositories.video = new VideoRepository(axios);
             let videoId = this.$route.params.id;
-            videoRepository.get(videoId).then(response => {
+            this.repositories.video .get(videoId).then(response => {
                 this.video = response.data;
-                videoRepository.labels(videoId)
+                this.repositories.video .labels(videoId)
                     .then(response => this.labels = response.data);
             });
         }

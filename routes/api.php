@@ -17,15 +17,15 @@ Route::group(['namespace' => 'Api'], function () {
     Route::group(['middleware' => 'auth:api'], function () {
         Route::post('/videos', 'VideosController@create');
         Route::post('/videos/{id}/labels', 'VideosController@addLabel');
-        Route::post('/videos/{id}/votes', 'VideosController@addVote');
+        Route::post('/votes/video/{id}', 'VotesController@create');
         Route::post('/labels', 'LabelsController@create');
     });
-    
+
     Route::get('/videos', 'VideosController@getAll');
     Route::get('/videos/latest', 'VideosController@latest');
     Route::get('/videos/{id}', 'VideosController@view');
     Route::get('/videos/{id}/labels', 'VideosController@getLabels');
-    Route::get('/videos/{id}/votes', 'VideosController@getVotes');
+    Route::get('/votes/video/{id}', 'VotesController@get');
     Route::get('/labels/{label}/videos', 'LabelsController@view');
     Route::get('/labels', 'LabelsController@getAll');
 });

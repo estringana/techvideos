@@ -53,19 +53,6 @@ class VideosController extends Controller
         return Video::all();
     }
 
-    public function addVote(AddVoteRequest $request, $videoId)
-    {
-        $command = new AddVoteToVideoCommand($videoId, $request->input('vote'), Auth::id());
-        $command->execute();
-
-        return response('', 201);
-    }
-
-    public function getVotes($videoId)
-    {
-        return Video::findOrFail($videoId)->votes;
-    }
-
     public function latest()
     {
         return Video::latest();

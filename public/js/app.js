@@ -1008,6 +1008,13 @@ var VideoRepository = function () {
         value: function labels(videoId) {
             return this.httpClient.get('/api/videos/' + videoId + '/labels');
         }
+    }, {
+        key: 'vote',
+        value: function vote(videoId, _vote) {
+            return this.httpClient.post('/api/votes/video/' + videoId, {
+                vote: _vote
+            });
+        }
     }]);
 
     return VideoRepository;
@@ -4428,10 +4435,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             video: null,
-            labels: null
+            labels: null,
+            repositories: {
+                video: null
+            }
         };
     },
 
+    methods: {
+        like: function like() {
+            this.repositories.video.vote(this.video.id, 'good');
+        },
+        dislike: function dislike() {
+            this.repositories.video.vote(this.video.id, 'bad');
+        }
+    },
     computed: {
         randomLabelStyle: function randomLabelStyle() {
             var labelColors = ["default", "primary", "success", "info", "warning", "danger"];
@@ -4443,11 +4461,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     mounted: function mounted() {
         var _this = this;
 
-        var videoRepository = new __WEBPACK_IMPORTED_MODULE_0__app_repository_Video_js__["a" /* default */](axios);
+        this.repositories.video = new __WEBPACK_IMPORTED_MODULE_0__app_repository_Video_js__["a" /* default */](axios);
         var videoId = this.$route.params.id;
-        videoRepository.get(videoId).then(function (response) {
+        this.repositories.video.get(videoId).then(function (response) {
             _this.video = response.data;
-            videoRepository.labels(videoId).then(function (response) {
+            _this.repositories.video.labels(videoId).then(function (response) {
                 return _this.labels = response.data;
             });
         });
@@ -34771,7 +34789,19 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "container"
   }, [(_vm.video) ? _c('div', [_c('div', {
     staticClass: "page-header"
-  }, [_c('h1', [_vm._v(_vm._s(_vm.video.name) + " "), _c('small', [_vm._v("by @" + _vm._s(_vm.video.speaker))])])]), _vm._v(" "), _c('p', [_vm._v("\n            " + _vm._s(_vm.video.description) + "\n        ")]), _vm._v(" "), _c('p'), _c('div', [_vm._v("Like")]), _vm._v(" "), _c('div', [_vm._v("Dislike")]), _vm._v(" "), _c('p'), _vm._v(" "), _c('label-list', {
+  }, [_c('h1', [_vm._v(_vm._s(_vm.video.name) + " "), _c('small', [_vm._v("by @" + _vm._s(_vm.video.speaker))])])]), _vm._v(" "), _c('p', [_vm._v("\n            " + _vm._s(_vm.video.description) + "\n        ")]), _vm._v(" "), _c('p', [_c('button', {
+    on: {
+      "click": function($event) {
+        _vm.like()
+      }
+    }
+  }, [_vm._v("Like")]), _vm._v(" "), _c('button', {
+    on: {
+      "click": function($event) {
+        _vm.dislike()
+      }
+    }
+  }, [_vm._v("Dislike")])]), _vm._v(" "), _c('label-list', {
     attrs: {
       "labels": _vm.labels
     }
